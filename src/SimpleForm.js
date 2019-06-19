@@ -1,6 +1,9 @@
 import React from 'react';
 import Greetings from './Greetings.js'
 import style from './style'
+import TextField from './TextField'
+import FirstNameField from './FirstNameField'
+import LastNameField from './LastNameField'
 
 class SimpleForm extends React.Component {
 
@@ -14,9 +17,9 @@ state = {
 validateName = name => {
   const regex = /[A-Za-z]{3,}/;
 
-  return regex.test(name)
-  ? ""
-  : "The name must contain 3 or more letters. Special characters are not allowed"
+  return !regex.test(name)
+  ? "The name must contain 3 or more letters. Special characters are not allowed"
+  : ""
 }
 
 onFirstNameBlur = () => {
@@ -48,34 +51,18 @@ onLastNameChange = event =>
   render() {
 
     const {firstNameError, firstName, lastNameError, lastName} = this.state
+
     return (
       <div style={style.form}>
-        <div style={style.inputGroup}>
-          <label>
-            First Name:
-              <input
-                style={style.input}
-                type="text"
-                name="firstName"
-                onChange={this.onFirstNameChange}
-                onBlur = {this.onFirstNameBlur} />
-                {firstNameError && <div style={style.error}>{firstNameError} </div>}
-          </label>
-        </div>
+      <FirstNameField
+        error={firstNameError}
+        onBlur={this.onFirstNameBlur}
+        onChange={this.onFirstNameChange} />
 
-        <div style={style.inputGroup}>
-          <label>
-            Last Name:
-              <input
-                style={style.input}
-                type="text"
-                name="lastName"
-                onChange={this.onLastNameChange}
-                onBlur={this.onLastNameBlur} />
-                {lastNameError && <div style={style.error}>{lastNameError} </div>}
-            </label>
-          </div>
-            <Greetings firstName={this.state.firstName} lastName={this.state.lastName} />
+      <LastNameField
+        error={lastNameError}
+        onBlur={this.onLastNameBlur}
+        onChange={this.onLastNameChange}  />
       </div>
     )
   }

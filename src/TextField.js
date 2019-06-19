@@ -16,3 +16,5 @@ const TextField = ({name, onChange, onBlur, error, label}) => (
       </label>
       </div>
 )
+
+export default TextField
